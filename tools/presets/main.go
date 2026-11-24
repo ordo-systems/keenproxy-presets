@@ -779,7 +779,7 @@ func marshalCatalog(p []preset) ([]byte, error) {
 func renderSourcesBlock(r *recipe, locked map[string]lockSource) string {
 	var b strings.Builder
 	b.WriteString("## Generated preset sources\n\n")
-	b.WriteString("This table describes the generated part of the catalog. Historical entries, including the base entries of supplemented IDs, come from `tools/presets/compatibility.json`; their original provenance and redistribution terms have not been established. License texts for generated sources are under `LICENSES/` inside the notices archive.\n\n")
+	b.WriteString("License texts for the sources listed below are under `LICENSES/` inside the notices archive.\n\n")
 	b.WriteString("| Source | URL | Revision | License |\n|---|---|---|---|\n")
 	names := make([]string, 0, len(locked))
 	for name := range locked {
