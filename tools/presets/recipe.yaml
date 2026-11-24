@@ -44,11 +44,19 @@ presets:
     name: Russian banks
     category: Russia
     description: Russian bank websites and payment services from the MIT v2fly catalog and a project-owned seed.
-    # The upstream bank group also contains unrelated education and mobile services.
-    exclude_subtrees: [centraluniversity.ru, cu.ru, prodcontest.com, rf-sim-mobile.ru, tinkoffmobile.com]
     parts:
       - source: v2fly
         files: [category-bank-ru]
+        # Only reviewed bank and payment suffixes. Imported company categories
+        # also contain education, mobile, travel and other unrelated properties.
+        only: [absolutbank.ru, akbars.ru, alfabank.ru, atb.su, bank.yandex.ru, bspb.ru,
+          bystrobank.ru, chelinvest.ru, crediteurope.ru, domrfbank.ru, dvbank.ru,
+          gazprombank.ru, gpb.ru, homecredit.ru, metallinvestbank.ru, metib.ru, mkb.ru,
+          mtsbank.ru, novikom.ru, nspk.ru, otpbank.ru, psb.ru, psbank.ru, raiffeisen.ru,
+          rncb.ru, rosbank.ru, rsb.ru, rshb.ru, sber.ru, sberbank.com, sberbank.ru, sbrf.ru,
+          sinara.ru, sngb.ru, sovcombank.ru, tbank-online.com, tbank.ru, tcsbank.ru,
+          tinkoff.ru, tkbbank.ru, tochka-tech.com, tochka.com, unicreditbank.ru, uralsib.ru,
+          vbrr.ru, vtb.ru, yookassa.ru, yoomoney.ru, zenit.ru]
       - source: local
         files: [ru-banks-extra.txt]
 
