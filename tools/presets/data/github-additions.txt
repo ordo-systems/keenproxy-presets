@@ -1,0 +1,5 @@
+# Copilot API and cloud sessions: https://docs.github.com/en/copilot/reference/copilot-allowlist-reference
+githubcopilot.com
+production-copilot-host-centralus.webpubsub.azure.com
+production-copilot-host-westus.webpubsub.azure.com
+production-copilot-host.webpubsub.azure.com

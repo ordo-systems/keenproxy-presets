@@ -1,0 +1,165 @@
+schema: 1
+
+sources:
+  v2fly:
+    kind: github
+    repo: v2fly/domain-list-community
+    revision: 98c43cad27fa8f02043858763709fe4a95432ffb
+    archive: https://codeload.github.com/v2fly/domain-list-community/tar.gz/{revision}
+    archive_sha256: b2f3781253cc62041ab73a5526beee2130ea8051f57408535446e18682c42a7a
+    license: MIT
+    license_path: LICENSE
+    license_sha256: b9d84a22870d3f21c91a4c6e410c9cc51d00902f5233ad0c84011479244bf7d2
+    format: v2fly
+    dir: data
+  hxehex:
+    kind: github
+    repo: hxehex/russia-mobile-internet-whitelist
+    revision: fad3653ebd4b212643774a4d10af3eb33838e4ff
+    archive: https://codeload.github.com/hxehex/russia-mobile-internet-whitelist/tar.gz/{revision}
+    archive_sha256: 934a762270ebe077a4c94e6cae624d027b350191e57f23c65d155d75b6517569
+    license: MIT
+    license_path: LICENSE
+    license_sha256: 6ddb82e2279e0b9cdd63c772fe9d196afd664157e4f7ed26fb8d92f346f04a5b
+    format: plain
+  chebur:
+    kind: github
+    repo: chebur-net/russia-mobile-whitelist
+    revision: 8df7ae7b8713a11980f76671dcb7d2a956e883d3
+    archive: https://codeload.github.com/chebur-net/russia-mobile-whitelist/tar.gz/{revision}
+    archive_sha256: cabf6ba8837d9865abf673dbcc6e453f40b785fd8e92b99a37584e8299eae98d
+    license: MIT
+    license_path: LICENSE
+    license_sha256: 998f5fd13ab69580cd762f1a102dc2ffab740be4942740a08b63f37e875744fe
+    format: plain
+  local:
+    kind: local
+    origin: project
+    license: GPL-3.0-only
+    license_path: LICENSE
+    format: plain
+
+presets:
+  - id: ru-banks
+    name: Russian banks
+    category: Russia
+    description: Russian bank websites and payment services from the MIT v2fly catalog and a project-owned seed.
+    parts:
+      - source: v2fly
+        files: [category-bank-ru]
+      - source: local
+        files: [ru-banks-extra.txt]
+
+  - id: ru-finance
+    name: Russian finance
+    category: Russia
+    description: Bank of Russia, financial marketplace, and Mir payment services.
+    parts:
+      - source: local
+        files: [ru-finance.txt]
+
+  - id: ru-sber
+    name: Sber ecosystem
+    category: Russia
+    description: Sber services outside the core bank domain.
+    parts:
+      - source: local
+        files: [ru-sber.txt]
+
+  - id: ru-state
+    name: Russian government
+    category: Russia
+    description: Federal and regional government services from v2fly and a project-owned seed.
+    # These public registration zones do not identify government services.
+    exclude_subtrees: [cbg.ru, edu.ru, marine.ru]
+    parts:
+      - source: v2fly
+        files: [category-gov-ru]
+      - source: local
+        files: [ru-state-extra.txt]
+
+  - id: ru-social
+    name: Russian social media
+    category: Russia
+    description: Russian social networks, blogs, and messengers.
+    exclude: [cdn-vk.ru]
+    parts:
+      - source: v2fly
+        files: [vk, ok, dzen]
+      - source: v2fly
+        files: [mailru-group]
+        # Keep previously supported services without importing the whole holding.
+        only: [appsmail.ru, attachmail.ru, bk.ru, boosty.to, donationalerts.com,
+          imgsmail.ru, inbox.ru, internet.ru, list.ru, mail.ru, max.ru, mycdn.me,
+          sferum.ru, vk-apps.com, vk-apps.ru, vk.company, vk.team, vkgo.app,
+          vklive.app, vkvideo.ru, xmail.ru, youla.io, youla.ru]
+      - source: local
+        files: [ru-social-extra.txt]
+
+  - id: ru-video
+    name: Russian video and TV
+    category: Russia
+    description: Russian video services, TV channels, and cinema sites.
+    parts:
+      - source: v2fly
+        files: [rutube, okko, wink, kinopoisk, category-entertainment-ru]
+      - source: local
+        files: [ru-video-extra.txt]
+
+  - id: ru-essential
+    name: Essential Russian services
+    category: Russia
+    description: Selected Russian services from operator lists and official sites.
+    parts:
+      - source: hxehex
+        files: [whitelist.txt]
+        # An observed SNI does not authorize its whole subtree. Retain only
+        # suffixes supported by the earlier catalog and still in these sources.
+        only: &essential_suffixes [2gis.ru, aeroflot.ru, aif.ru, auchan.ru, avito.ru,
+          avito.st, beeline.ru, citydrive.ru, ctc.ru, dellin.ru, dixy.ru, domashniy.ru,
+          duma.gov.ru, dzen.ru, esia.gosuslugi.ru, gazeta.ru, gosuslugi.ru,
+          government.ru, hh.ru, ivi.ru, kommersant.ru, kp.ru, kremlin.ru, kuper.ru,
+          lenta.ru, magnit.ru, mail.ru, matchtv.ru, max.ru, mchs.gov.ru, megafon.ru,
+          metro-cc.ru, mir24.tv, mk.ru, moex.com, mos.ru, mts.ru, mvd.ru, nspk.ru,
+          ntv.ru, ok.ru, otr-online.ru, ozon.ru, perekrestok.ru, petrovich.ru,
+          pochta.ru, rambler.ru, rbc.ru, rg.ru, ria.ru, rosseti.ru, rt.ru, rutube.ru,
+          rzd.ru, samokat.ru, tnt-online.ru, tutu.ru, tv3.ru, tvc.ru, vedomosti.ru,
+          vk.com, vkusvill.ru, wb.ru, wildberries.ru, x5.ru, ya.ru, yandex.ru]
+      - source: chebur
+        files: [moscow-tele2/domains.txt, spb-tele2/domains.txt]
+        only: *essential_suffixes
+      - source: local
+        files: [ru-essential-extra.txt]
+
+  - id: miro
+    name: Miro
+    category: Work
+    description: Miro global production domains.
+    parts:
+      - source: local
+        files: [miro.txt]
+
+  # These IDs supplement the app's historical presets without republishing them.
+  - id: docker
+    name: Docker
+    category: Development
+    description: Independently verified Docker endpoints.
+    parts:
+      - source: local
+        files: [docker-additions.txt]
+
+  - id: github
+    name: GitHub and Copilot
+    category: Development
+    description: Independently verified GitHub Copilot endpoints.
+    parts:
+      - source: local
+        files: [github-additions.txt]
+
+  - id: openai
+    name: OpenAI and ChatGPT
+    category: AI
+    description: Independently verified ChatGPT endpoints.
+    parts:
+      - source: local
+        files: [openai-additions.txt]

@@ -1,0 +1,9 @@
+# Russian financial infrastructure and payment services.
+# Project-owned seed, GPL-3.0-only.
+# Sources: cbr.ru (Bank of Russia), finuslugi.ru (Moscow financial services),
+# privetmir.ru and vamprivet.ru (Mir payment system).
+# Not copied from any third-party preset collection.
+cbr.ru
+finuslugi.ru
+privetmir.ru
+vamprivet.ru

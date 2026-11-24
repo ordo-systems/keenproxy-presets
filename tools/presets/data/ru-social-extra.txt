@@ -1,0 +1,18 @@
+# Additional Russian social, blog, and messenger domains absent from the MIT
+# v2fly candidate set. Project-owned seed, GPL-3.0-only. Domain names are taken
+# from the official sites of the listed services; not copied from any
+# third-party preset collection.
+#
+# st-ok.cdn-vk.ru is an Odnoklassniki CDN host. Its apex has no A/AAAA record;
+# the recipe must allow NODATA for this wildcard-only suffix.
+dtf.ru
+livejournal.com
+max.me
+pikabu.ru
+st-ok.cdn-vk.ru
+tenchat.ru
+vc.ru
+yaplakal.com
+#
+# Historical ru-social hosts restored deliberately.
+my.mail.ru

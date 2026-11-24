@@ -1,0 +1,70 @@
+name: Catalog
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version-file: go.mod
+      - run: go test ./...
+      - name: Audit DNS
+        if: github.event_name == 'workflow_dispatch'
+        run: go run ./tools/presets -dns
+      - name: Build catalog and smoke-test reproducibility
+        run: |
+          set -euo pipefail
+          go run ./tools/presets
+          go run ./tools/presets -offline -check
+          tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \
+            -C dist -cf - PRESET_SOURCES.md THIRD_PARTY_NOTICES.md LICENSES \
+            | gzip -n > dist/keenproxy-preset-notices.tar.gz
+          cd dist
+          sha256sum presets.json PRESET_SOURCES.md sources.lock.json keenproxy-preset-notices.tar.gz > SHA256SUMS
+          test "$(sha256sum presets.json | cut -d ' ' -f 1)" = "$(jq -er .output_sha256 sources.lock.json)"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: catalog
+          if-no-files-found: error
+          path: |
+            dist/presets.json
+            dist/PRESET_SOURCES.md
+            dist/sources.lock.json
+            dist/keenproxy-preset-notices.tar.gz
+            dist/SHA256SUMS
+
+  publish:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: catalog
+          path: dist
+      - name: Publish versioned catalog
+        working-directory: dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          sha256sum --check SHA256SUMS
+          gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes \
+            presets.json PRESET_SOURCES.md sources.lock.json keenproxy-preset-notices.tar.gz SHA256SUMS

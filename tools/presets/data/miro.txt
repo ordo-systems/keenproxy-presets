@@ -1,0 +1,21 @@
+# Miro global production domains.
+# Source: https://help.miro.com/hc/en-us/articles/20857452690706-Miro-domains-reference
+# Retrieved: 2026-11-24
+#
+# Only Miro-owned global production domains are included. The official list
+# also names regional domains (*.au.miro.com, *.jp.miro.com, *.us.miro.com),
+# but the miro.com suffix already covers every *.miro.com subdomain.
+#
+# Shared third-party tooling domains from the official allowlist
+# (braze.eu, sentry.io, split.io, fonts.googleapis.com, cookielaw.org,
+# zendesk.com, github.io, stigg.io) are intentionally excluded from a routing
+# preset because they would route unrelated traffic.
+#
+# miro-apps.com is wildcard-only in the official reference. Its apex has no
+# A/AAAA record; allow NODATA for this suffix in the DNS gate.
+miro.com
+mirostatic.com
+realtimeboard.com
+webwhiteboard.com
+onlinewhiteboard.com
+miro-apps.com

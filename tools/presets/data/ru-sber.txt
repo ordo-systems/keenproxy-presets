@@ -1,0 +1,7 @@
+# Sber ecosystem services outside the core bank domain.
+# Project-owned seed, GPL-3.0-only.
+# Official Sber services: domclick.ru, sbermarket.ru, sbermegamarket.ru.
+# Not copied from any third-party preset collection.
+domclick.ru
+sbermarket.ru
+sbermegamarket.ru

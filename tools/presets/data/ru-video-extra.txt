@@ -1,0 +1,29 @@
+# Additional Russian video, TV, and cinema domains absent from the MIT v2fly
+# candidate set. Project-owned seed, GPL-3.0-only. Domain names are taken from
+# the official sites of the listed services; not copied from any third-party
+# preset collection.
+1tv.ru
+afisha.ru
+azbukainterneta.ru
+ctc.ru
+domashniy.ru
+kino-teatr.ru
+kinoafisha.info
+kion.ru
+matchtv.ru
+megogo.net
+mir24.tv
+mtsmedia.ru
+muz-tv.ru
+ntv.ru
+on-media.ru
+otr-online.ru
+ren.tv
+rostelecom.ru
+russia.tv
+smotrim.ru
+tnt-online.ru
+tv3.ru
+tvc.ru
+tvzvezda.ru
+vgtrk.ru

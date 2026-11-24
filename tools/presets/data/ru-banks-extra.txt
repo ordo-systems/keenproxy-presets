@@ -1,0 +1,31 @@
+# Additional Russian bank domains absent from v2fly category-bank-ru.
+# Project-owned seed, GPL-3.0-only.
+# Domain names verified against official bank sites and the Bank of Russia
+# credit institution registry: https://www.cbr.ru/banking_sect/
+# Official hostnames; no third-party list text is copied.
+vtb24.ru
+rgsbank.ru
+rosselhozbank.ru
+pskb.ru
+sovcom.ru
+abs.ru
+creditbank.ru
+fcbank.ru
+bank-spb.ru
+bbin.ru
+kk.ru
+sbpgpb.ru
+gazprombank.tech
+alfa-bank.ru
+alfabank.com
+#
+# Historical ru-banks hosts restored deliberately.
+cbr.ru
+domclick.ru
+finuslugi.ru
+online.sberbank.ru
+privetmir.ru
+sbermarket.ru
+sbermegamarket.ru
+sbp.nspk.ru
+vamprivet.ru

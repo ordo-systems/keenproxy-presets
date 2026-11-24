@@ -1,0 +1,43 @@
+# Additional Russian essential-service domains from the Mintsifry availability
+# list and the official sites of the listed services. Project-owned seed,
+# GPL-3.0-only. Not copied from any third-party preset collection.
+#
+# Some entries overlap ru-video-extra.txt; the generator deduplicates them.
+1tv.ru
+5ka.ru
+apteka.ru
+chestnyznak.ru
+council.gov.ru
+genproc.gov.ru
+gismeteo.ru
+gov.ru
+gov.spb.ru
+iz.ru
+lenta.com
+motivtelecom.ru
+muz-tv.ru
+nalog.gov.ru
+odnoklassniki.ru
+privetmir.ru
+publication.pravo.gov.ru
+ren.tv
+rosatom.ru
+rostelecom.ru
+russianpost.ru
+rzd-bonus.ru
+sfr.gov.ru
+smotrim.ru
+sudrf.ru
+t2.ru
+tatarstan.ru
+taximaxim.ru
+vamprivet.ru
+vgtrk.ru
+vk.ru
+vkusnoitochka.ru
+vkvideo.ru
+xn--90aivcdt6dxbc.xn--p1ai
+xn--b1aaefaaepc3cyan0e6d.xn--p1ai
+xn--b1aew.xn--p1ai
+yota.ru
+zdravcity.ru

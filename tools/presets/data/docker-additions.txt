@@ -1,0 +1,2 @@
+# Docker Hardened Images: https://docs.docker.com/desktop/allow-list/
+dhi.io
