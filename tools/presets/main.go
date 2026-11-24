@@ -163,9 +163,13 @@ func run(o options) error {
 	if err != nil {
 		return err
 	}
-	out := make([]preset, 0, len(order))
-	for _, id := range order {
-		out = append(out, managed[id])
+	legacy, err := loadCatalog(filepath.Join(root, "tools/presets/compatibility.json"))
+	if err != nil {
+		return fmt.Errorf("compatibility catalog: %w", err)
+	}
+	out, err := assembleCatalog(legacy, managed, order)
+	if err != nil {
+		return err
 	}
 	raw, err := marshalCatalog(out)
 	if err != nil {
@@ -728,6 +732,42 @@ func union(a, b []string) []string {
 	return sortUnique(append(append([]string{}, a...), b...))
 }
 
+// assembleCatalog preserves existing preset metadata and rule order for matching IDs.
+// Generated records with new IDs are appended in recipe order.
+func assembleCatalog(legacy []preset, managed map[string]preset, order []string) ([]preset, error) {
+	if len(legacy) == 0 {
+		return nil, errors.New("compatibility catalog is empty")
+	}
+	out := make([]preset, 0, len(legacy)+len(order))
+	seen := make(map[string]bool, len(legacy))
+	for _, p := range legacy {
+		if p.ID == "" || seen[p.ID] || len(p.Domains) == 0 {
+			return nil, fmt.Errorf("invalid compatibility preset %q", p.ID)
+		}
+		seen[p.ID] = true
+		if additions, ok := managed[p.ID]; ok {
+			p.Domains = appendMissing(p.Domains, additions.Domains)
+			p.Prefixes = appendMissing(p.Prefixes, additions.Prefixes)
+		}
+		out = append(out, p)
+	}
+	for _, id := range order {
+		if !seen[id] {
+			out = append(out, managed[id])
+		}
+	}
+	return out, nil
+}
+
+func appendMissing(existing, additions []string) []string {
+	for _, entry := range additions {
+		if !slices.Contains(existing, entry) {
+			existing = append(existing, entry)
+		}
+	}
+	return existing
+}
+
 func marshalCatalog(p []preset) ([]byte, error) {
 	raw, err := json.MarshalIndent(p, "", "  ")
 	if err != nil {
@@ -739,7 +779,7 @@ func marshalCatalog(p []preset) ([]byte, error) {
 func renderSourcesBlock(r *recipe, locked map[string]lockSource) string {
 	var b strings.Builder
 	b.WriteString("## Generated preset sources\n\n")
-	b.WriteString("Presets are generated from the sources below. License texts are under `LICENSES/` inside the notices archive.\n\n")
+	b.WriteString("This table describes the generated part of the catalog. Historical entries, including the base entries of supplemented IDs, come from `tools/presets/compatibility.json`; their original provenance and redistribution terms have not been established. License texts for generated sources are under `LICENSES/` inside the notices archive.\n\n")
 	b.WriteString("| Source | URL | Revision | License |\n|---|---|---|---|\n")
 	names := make([]string, 0, len(locked))
 	for name := range locked {

@@ -151,7 +151,7 @@ presets:
       - source: local
         files: [miro.txt]
 
-  # These IDs supplement the app's historical presets without republishing them.
+  # These entries supplement the matching IDs in the compatibility catalog.
   - id: docker
     name: Docker
     category: Development

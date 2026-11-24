@@ -32,6 +32,27 @@ func testSources(root string) map[string]*loadedSource {
 	}
 }
 
+func TestAssembleCatalogKeepsHistoricalAndSupplementedPresets(t *testing.T) {
+	legacy := []preset{
+		{ID: "claude", Domains: []string{"claude.example"}},
+		{ID: "github", Name: "GitHub", Domains: []string{"github.example"}},
+	}
+	managed := map[string]preset{
+		"github": {ID: "github", Name: "Supplement", Domains: []string{"github.example", "copilot.example"}},
+		"new":    {ID: "new", Domains: []string{"new.example"}},
+	}
+	got, err := assembleCatalog(legacy, managed, []string{"github", "new"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(got) != 3 || got[0].ID != "claude" || !slices.Equal(got[0].Domains, legacy[0].Domains) ||
+		got[1].ID != "github" || got[1].Name != "GitHub" ||
+		!slices.Equal(got[1].Domains, []string{"github.example", "copilot.example"}) ||
+		got[2].ID != "new" {
+		t.Fatalf("assembled catalog = %+v", got)
+	}
+}
+
 func TestComposeFiltersRulesByRoutingScope(t *testing.T) {
 	dir := t.TempDir()
 	writeFile(t, filepath.Join(dir, "a.txt"), "host.registration.test\nbroad.test\nhost.broad.test\nother.test\n")

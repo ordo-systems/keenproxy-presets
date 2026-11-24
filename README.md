@@ -1,6 +1,6 @@
 # KeenProxy presets
 
-Source recipes and versioned routing data for [KeenProxy](https://github.com/ordo-systems/keen-proxy). This repository publishes independently built presets and selected additions to older app presets. It does not republish the app's historical catalog. If a published ID matches an older app preset, the app adds only the published domains and retains the original metadata.
+Source recipes and versioned routing data for [KeenProxy](https://github.com/ordo-systems/keen-proxy). The release asset `presets.json` is the complete catalog; consumers do not merge it with another file. The build retains historical presets from `tools/presets/compatibility.json` and adds generated presets and service endpoints. For matching IDs it preserves historical metadata and appends only missing entries.
 
 Edit `tools/presets/recipe.yaml` or the attributed seed files in `tools/presets/data/`. Domain entries are suffix rules: never add a shared CDN or public registration zone to represent one host. `only` limits a source part to exact entries, `exclude` removes exact entries, and `exclude_subtrees` removes an entire suffix tree. Filter names must be canonical lowercase DNS names.
 
