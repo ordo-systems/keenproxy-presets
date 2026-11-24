@@ -44,6 +44,8 @@ presets:
     name: Russian banks
     category: Russia
     description: Russian bank websites and payment services from the MIT v2fly catalog and a project-owned seed.
+    # The upstream bank group also contains unrelated education and mobile services.
+    exclude_subtrees: [centraluniversity.ru, cu.ru, prodcontest.com, rf-sim-mobile.ru, tinkoffmobile.com]
     parts:
       - source: v2fly
         files: [category-bank-ru]
@@ -70,8 +72,8 @@ presets:
     name: Russian government
     category: Russia
     description: Federal and regional government services from v2fly and a project-owned seed.
-    # These public registration zones do not identify government services.
-    exclude_subtrees: [cbg.ru, edu.ru, marine.ru]
+    # Public registration zones and church properties are not government services.
+    exclude_subtrees: [cbg.ru, edu.ru, marine.ru, mospat.ru, patriarchia.ru]
     parts:
       - source: v2fly
         files: [category-gov-ru]
@@ -100,6 +102,8 @@ presets:
     name: Russian video and TV
     category: Russia
     description: Russian video services, TV channels, and cinema sites.
+    # Provider-wide CDN suffixes and unrelated music services are not video routes.
+    exclude_subtrees: [cdnvideo.ru, cdnvideohub.com, kinescopecdn.net, promodj.com, restream-media.net, rtbcdn.ru, trbcdn.net]
     parts:
       - source: v2fly
         files: [rutube, okko, wink, kinopoisk, category-entertainment-ru]
